@@ -1,0 +1,2 @@
+import {db} from '../_lib/firebase.js';import {requireStaff,fail} from '../_lib/security.js';
+export default async function handler(req,res){try{await requireStaff(req,['super_admin']);const [s,c,t]=await Promise.all([db().collection('students').get(),db().collection('classes').get(),db().collection('users').where('role','in',['teacher','class_teacher']).get()]);return res.json({ok:true,students:s.size,classes:c.size,teachers:t.size})}catch(e){return fail(res,e)}}
