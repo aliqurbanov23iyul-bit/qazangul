@@ -1,0 +1,11 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn(){ return request.auth != null; }
+    function isStudent(){ return signedIn() && request.auth.token.role == 'student'; }
+    function sameStudent(id){ return isStudent() && request.auth.token.studentId == id; }
+    // Browser clients get no broad database access. Admin/staff writes go through verified Vercel APIs.
+    match /students/{id} { allow read: if sameStudent(id); allow write: if false; }
+    match /{document=**} { allow read, write: if false; }
+  }
+}

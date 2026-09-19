@@ -1,5 +1,7 @@
 {
-  "name": "qazangul-school-v2",
-  "version": "2.0.0",
-  "private": true
+  "name":"qazangul-school-v2",
+  "version":"2.1.0",
+  "private":true,
+  "type":"module",
+  "dependencies":{"firebase-admin":"^13.4.0"}
 }
